@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hitesh Wadhwa — AI Leader & WEF Young Global Leader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --fog: #f4f1ec;
+    --gold: #b8974a;
+    --gold-light: #d4b46a;
+    --sand: #e8e2d6;
+    --mist: #8a8278;
+    --white: #fdfcfa;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: rgba(253,252,250,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--mist);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 5rem 6rem;
+    position: relative;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; right: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold) 40%, transparent);
+  }
+
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #7a776e;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+    max-width: 340px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 3.5rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 2.2rem;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); }
+
+  .btn-ghost {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6a6760;
+    text-decoration: none;
+    border-bottom: 1px solid #3a3830;
+    padding-bottom: 2px;
+    transition: all 0.3s;
+  }
+
+  .btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
+
+  .hero-right {
+    background: var(--fog);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 5rem 6rem;
+    gap: 3rem;
+    opacity: 0;
+    animation: fadeIn 1.2s ease 1s forwards;
+  }
+
+  .credential-block {
+    border-left: 2px solid var(--gold);
+    padding-left: 1.5rem;
+  }
+
+  .credential-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 0.4rem;
+  }
+
+  .credential-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  .hero-wef-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--ink);
+    color: var(--white);
+    padding: 0.8rem 1.4rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+
+  .hero-wef-badge .dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-strip {
+    background: var(--gold);
+    padding: 0.9rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 22s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0 2.5rem;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 0; }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4rem;
+  }
+
+  .section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--white); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 6rem;
+    align-items: start;
+    margin-top: 4rem;
+  }
+
+  .about-left .number-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .stat-item {}
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-top: 0.4rem;
+  }
+
+  .about-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--sand);
+    margin: 1.5rem 0;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: #4a4740;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-quote {
+    margin-top: 3rem;
+    border-left: 3px solid var(--gold);
+    padding: 1rem 2rem;
+    background: var(--fog);
+  }
+
+  .about-quote p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  /* ── CAREER ── */
+  #career { background: var(--ink); }
+
+  #career .section-title { color: var(--white); }
+  #career .section-label { color: var(--gold); }
+
+  .career-grid {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .career-card {
+    padding: 3rem 2.5rem;
+    border-right: 1px solid #2a2720;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .career-card:last-child { border-right: none; }
+  .career-card:hover { background: #161410; }
+
+  .career-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .career-card:hover::before { transform: scaleX(1); }
+
+  .career-period {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .career-company {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .career-role {
+    font-size: 0.8rem;
+    color: #7a776e;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .career-highlight {
+    font-size: 0.82rem;
+    color: #5a5750;
+    line-height: 1.8;
+  }
+
+  .career-highlight strong {
+    color: var(--gold-light);
+    font-weight: 400;
+  }
+
+  /* ── SPEAKING ── */
+  #speaking { background: var(--fog); }
+
+  .speaking-grid {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+
+  .speak-card {
+    background: var(--white);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+
+  .speak-card:hover { transform: translateY(-4px); }
+
+  .speak-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
+
+  .speak-event {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .speak-detail {
+    font-size: 0.75rem;
+    color: var(--mist);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .speak-topic {
+    font-size: 0.88rem;
+    color: #5a5750;
+    line-height: 1.7;
+    border-left: 2px solid var(--sand);
+    padding-left: 1rem;
+  }
+
+  /* ── RECOGNITION ── */
+  #recognition { background: var(--white); }
+
+  .recognition-row {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+
+  .recog-item {
+    text-align: center;
+    padding: 3rem 2rem;
+    border: 1px solid var(--sand);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .recog-item:hover {
+    border-color: var(--gold);
+    box-shadow: 0 8px 32px rgba(184,151,74,0.08);
+  }
+
+  .recog-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .recog-org {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .recog-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .recog-desc {
+    font-size: 0.8rem;
+    color: var(--mist);
+    line-height: 1.7;
+  }
+
+  /* ── CONNECT ── */
+  #connect {
+    background: var(--ink);
+    padding: 8rem 0;
+    text-align: center;
+  }
+
+  #connect .section-title { color: var(--white); }
+
+  #connect .section-label { color: var(--gold); }
+
+  .connect-sub {
+    font-size: 1rem;
+    color: #7a776e;
+    line-height: 1.8;
+    max-width: 520px;
+    margin: 1.5rem auto 3rem;
+  }
+
+  .connect-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .connect-link {
+    padding: 1rem 2.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid #3a3830;
+    color: var(--white);
+    transition: all 0.3s;
+  }
+
+  .connect-link:hover {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+
+  .connect-link.primary {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+
+  .connect-link.primary:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #080807;
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: #4a4740;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  footer .copy {
+    font-size: 0.65rem;
+    color: #3a3830;
+    letter-spacing: 0.1em;
+  }
+
+  footer .social {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  footer .social a {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #4a4740;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  footer .social a:hover { color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 7rem 2rem 3rem; }
+    .hero-right { padding: 3rem 2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .career-grid { grid-template-columns: 1fr; }
+    .career-card { border-right: none; border-bottom: 1px solid #2a2720; }
+    .speaking-grid { grid-template-columns: 1fr; }
+    .recognition-row { grid-template-columns: 1fr; }
+    .container { padding: 0 2rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Hitesh Wadhwa</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#career">Career</a></li>
+    <li><a href="#speaking">Speaking</a></li>
+    <li><a href="#recognition">Recognition</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">AI Leader · Technologist · Global Speaker</div>
+    <h1 class="hero-name">Hitesh<br><em>Wadhwa</em></h1>
+    <p class="hero-subtitle">
+      Head of AI GTM at Google Cloud · WEF Young Global Leader · 
+      20+ years at the intersection of enterprise technology and transformative growth.
+    </p>
+    <div class="hero-cta">
+      <a href="#connect" class="btn-primary">Get in Touch</a>
+      <a href="#about" class="btn-ghost">Explore Profile</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-wef-badge">
+      <span class="dot"></span>
+      WEF Young Global Leader · Class of 2021
+    </div>
+
+    <div class="credential-block">
+      <div class="credential-label">Current Role</div>
+      <div class="credential-value">Head of AI GTM<br>Google Cloud, North America</div>
+    </div>
+
+    <div class="credential-block">
+      <div class="credential-label">Based in</div>
+      <div class="credential-value">Austin, Texas</div>
+    </div>
+
+    <div class="credential-block">
+      <div class="credential-label">Education</div>
+      <div class="credential-value">MBA · IIM Bangalore<br>B.Tech · Thapar Institute</div>
+    </div>
+
+    <div class="credential-block">
+      <div class="credential-label">Also recognized by</div>
+      <div class="credential-value">Forbes Business Development Council</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Google Cloud</span><span>·</span>
+    <span>World Economic Forum</span><span>·</span>
+    <span>Davos 2024</span><span>·</span>
+    <span>AI Summit New York</span><span>·</span>
+    <span>Forbes BDC</span><span>·</span>
+    <span>Amazon Web Services</span><span>·</span>
+    <span>Tech Mahindra</span><span>·</span>
+    <span>IIM Bangalore</span><span>·</span>
+    <span>WEF Young Global Leader</span><span>·</span>
+    <span>GenAI Ambassador</span><span>·</span>
+    <span>Google Cloud</span><span>·</span>
+    <span>World Economic Forum</span><span>·</span>
+    <span>Davos 2024</span><span>·</span>
+    <span>AI Summit New York</span><span>·</span>
+    <span>Forbes BDC</span><span>·</span>
+    <span>Amazon Web Services</span><span>·</span>
+    <span>Tech Mahindra</span><span>·</span>
+    <span>IIM Bangalore</span><span>·</span>
+    <span>WEF Young Global Leader</span><span>·</span>
+    <span>GenAI Ambassador</span><span>·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label reveal">Biography</div>
+    <h2 class="section-title reveal">Technology as a force<br>for global good</h2>
+
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <div class="number-block">
+          <div class="stat-item">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Years in Enterprise Technology</div>
+          </div>
+          <div class="about-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">$100M+</div>
+            <div class="stat-label">Business Growth Orchestrated</div>
+          </div>
+          <div class="about-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">2×</div>
+            <div class="stat-label">Selected for Shadow Board (out of 130K employees)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-right reveal">
+        <p class="about-text">
+          Hitesh Wadhwa is a senior AI and enterprise technology leader whose career spans Google Cloud, Amazon Web Services, and Tech Mahindra — consistently operating where transformative technology meets business impact at scale. As <strong>Head of AI GTM at Google Cloud</strong>, he leads sales, strategy, and the growth and adoption of AI across North America with a primary focus on the Financial Services vertical.
+        </p>
+        <p class="about-text">
+          His conviction is simple and unwavering: technology, applied with wisdom and purpose, can address the most complex challenges facing our world. This belief earned him recognition as a <strong>WEF Young Global Leader (Class of 2021)</strong> — a distinction awarded to fewer than 100 exceptional leaders worldwide each year, and a role he takes to global stages from Davos to New York.
+        </p>
+        <p class="about-text">
+          Earlier in his career, Hitesh was chosen twice for Tech Mahindra's highly competitive Shadow Board — an exclusive program selecting just six individuals annually from a pool of over 130,000 employees — where he led programs spanning digital transformation, diversity, culture, and sustainability.
+        </p>
+        <div class="about-quote">
+          <p>"I look forward to working on solving some really complex and challenging global issues through technology and making my life more meaningful and purposeful."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREER -->
+<section id="career">
+  <div class="container">
+    <div class="section-label reveal">Career Journey</div>
+    <h2 class="section-title reveal">Two decades of enterprise<br>leadership</h2>
+
+    <div class="career-grid">
+      <div class="career-card reveal">
+        <div class="career-period">2022 — Present</div>
+        <div class="career-company">Google Cloud</div>
+        <div class="career-role">Head of AI GTM, North America<br>GenAI Ambassador</div>
+        <div class="career-highlight">
+          Leading sales, strategy, and enterprise adoption of AI across North America. Driving growth in the <strong>Financial Services vertical</strong>. One of Google Cloud's appointed GenAI Ambassadors, championing the Vertex AI platform and next-generation model deployment at scale.
+        </div>
+      </div>
+
+      <div class="career-card reveal">
+        <div class="career-period">2020 — 2022</div>
+        <div class="career-company">Amazon Web Services</div>
+        <div class="career-role">Principal, Enterprise Business<br>High-Growth Region</div>
+        <div class="career-highlight">
+          Orchestrated strategies to expand AWS adoption within large and medium-sized enterprises across a rapidly scaling region. Built and led a high-performing enterprise sales function focused on <strong>AI, Cloud, and Digital Transformation</strong>.
+        </div>
+      </div>
+
+      <div class="career-card reveal">
+        <div class="career-period">2003 — 2020</div>
+        <div class="career-company">Tech Mahindra</div>
+        <div class="career-role">Vice President, CME Vertical<br>Shadow Board Member (2×)</div>
+        <div class="career-highlight">
+          Drove <strong>$100M+ in business growth</strong> within the $2.5B+ Communications, Media & Entertainment vertical. Selected twice for the Shadow Board — 6 leaders chosen from 130,000+ employees — where he shaped digital transformation, culture, and sustainability programs at the board level.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2px;">
+      <div class="career-grid">
+        <div class="career-card reveal" style="border-right:1px solid #2a2720;">
+          <div class="career-period">2007 — 2013</div>
+          <div class="career-company">DXC Technology</div>
+          <div class="career-role">Associate Manager<br>Enterprise Technology & Sales</div>
+          <div class="career-highlight">
+            Managed IoT solutions, digital transformation strategy, and sales of enterprise technology platforms. Also responsible for developing a <strong>Sales/CRM application</strong> for enterprise deals for Sun Microsystems (Oracle).
+          </div>
+        </div>
+
+        <div class="career-card reveal" style="border-right:1px solid #2a2720;">
+          <div class="career-period">Academic</div>
+          <div class="career-company">IIM Bangalore</div>
+          <div class="career-role">MBA · 2013–2014</div>
+          <div class="career-highlight">
+            Indian Institute of Management, Bangalore — one of Asia's most prestigious business schools. Combined with a B.Tech in Electronics & Communications from <strong>Thapar Institute of Engineering & Technology</strong> (2000).
+          </div>
+        </div>
+
+        <div class="career-card reveal">
+          <div class="career-period">Thought Leadership</div>
+          <div class="career-company">AI & Cloud</div>
+          <div class="career-role">Evangelist & Practitioner</div>
+          <div class="career-highlight">
+            Deep expertise across <strong>Generative AI, Vertex AI, Cloud infrastructure, Quantum Computing, and Web3</strong>. Consistently translating emerging technology into tangible enterprise value across financial services, telecom, media, and more.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKING -->
+<section id="speaking">
+  <div class="container">
+    <div class="section-label reveal">On Stage</div>
+    <h2 class="section-title reveal">Speaking at the world's<br>most important forums</h2>
+
+    <div class="speaking-grid">
+      <div class="speak-card reveal">
+        <div class="speak-event">World Economic Forum</div>
+        <div class="speak-detail">Davos, Switzerland · 2024</div>
+        <div class="speak-topic">
+          Representing the WEF Young Global Leader community at the world's premier gathering of political, business, and civil society leaders. Engaging on the future of AI, responsible technology deployment, and building an inclusive, sustainable world.
+        </div>
+      </div>
+
+      <div class="speak-card reveal">
+        <div class="speak-event">AI Summit New York</div>
+        <div class="speak-detail">Javits Center, NYC · December 2023</div>
+        <div class="speak-topic">
+          Featured alongside OpenAI's Adam Goldberg in the flagship panel: <em>"What does Generative AI mean for business?"</em> — addressing enterprise readiness, adoption strategies, and the role of foundation models in reshaping industries.
+        </div>
+      </div>
+
+      <div class="speak-card reveal">
+        <div class="speak-event">WEF Young Global Leaders</div>
+        <div class="speak-detail">Global Community · Ongoing</div>
+        <div class="speak-topic">
+          Active member and speaker within the YGL community — a global network of purpose-driven leaders under 40. Contributing to dialogues on technology's role in addressing inequality, climate, and the future of work.
+        </div>
+      </div>
+
+      <div class="speak-card reveal">
+        <div class="speak-event">Enterprise AI Events</div>
+        <div class="speak-detail">North America · Ongoing</div>
+        <div class="speak-topic">
+          Regular keynote speaker and panel moderator at enterprise technology conferences on Generative AI strategy, Cloud adoption, and AI GTM — bringing a practitioner's perspective on translating AI from buzzword to business transformation.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOGNITION -->
+<section id="recognition">
+  <div class="container">
+    <div class="section-label reveal">Recognition</div>
+    <h2 class="section-title reveal">Honored by institutions<br>that define global leadership</h2>
+
+    <div class="recognition-row">
+      <div class="recog-item reveal">
+        <span class="recog-icon">🌐</span>
+        <div class="recog-title">Young Global Leader · Class of 2021</div>
+        <div class="recog-org">World Economic Forum</div>
+        <div class="recog-desc">
+          Selected from nominations worldwide through a rigorous assessment of impact, leadership, and commitment to society. Fewer than 100 leaders are recognized globally each year.
+        </div>
+      </div>
+
+      <div class="recog-item reveal">
+        <span class="recog-icon">◆</span>
+        <div class="recog-title">Forbes Business Development Council</div>
+        <div class="recog-org">Forbes</div>
+        <div class="recog-desc">
+          Invitation-only community for Senior-Level Sales and Business Development Executives — recognized for exceptional professional achievement and industry influence.
+        </div>
+      </div>
+
+      <div class="recog-item reveal">
+        <span class="recog-icon">⬡</span>
+        <div class="recog-title">Shadow Board Member (2×)</div>
+        <div class="recog-org">Tech Mahindra</div>
+        <div class="recog-desc">
+          Selected twice for one of the most exclusive internal programs in the industry — 6 individuals chosen annually from 130,000+ employees to shadow and advise the board of directors.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section id="connect">
+  <div class="container">
+    <div class="section-label">Connect</div>
+    <h2 class="section-title">Let's build something<br><em style="font-family:'Playfair Display',serif;font-style:italic;">meaningful</em></h2>
+    <p class="connect-sub">
+      Whether you're exploring AI strategy, looking for a speaker, or interested in connecting through the WEF YGL network — Hitesh is always open to conversations at the frontier of technology and impact.
+    </p>
+    <div class="connect-links">
+      <a href="https://www.linkedin.com/in/hiteshwadhwa" target="_blank" class="connect-link primary">LinkedIn</a>
+      <a href="https://www.weforum.org/people/hitesh-wadhwa/" target="_blank" class="connect-link">WEF Profile</a>
+      <a href="https://x.com/hiteshwadhwa" target="_blank" class="connect-link">X / Twitter</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Hitesh Wadhwa</div>
+  <div class="copy">© 2025 hiteshwadhwa.com</div>
+  <div class="social">
+    <a href="https://www.linkedin.com/in/hiteshwadhwa" target="_blank">LinkedIn</a>
+    <a href="https://www.weforum.org/people/hitesh-wadhwa/" target="_blank">WEF</a>
+    <a href="https://x.com/hiteshwadhwa" target="_blank">X</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.boxShadow = '0 2px 24px rgba(0,0,0,0.06)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
