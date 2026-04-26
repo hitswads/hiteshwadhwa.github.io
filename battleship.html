@@ -342,6 +342,7 @@ let placedCount = 0;
 let aiQueue = [];                     // target cells to try next
 let aiHits = [];                      // recent hits on current target ship
 let playerTurn = true;                // turn lock to prevent rapid-fire
+let aiTimeoutId = null;               // pending AI turn timer
 
 // ── Initialise ─────────────────────────────────────────────
 function init() {
@@ -358,6 +359,8 @@ function init() {
   aiQueue = [];
   aiHits = [];
   playerTurn = true;
+  clearTimeout(aiTimeoutId);
+  aiTimeoutId = null;
   document.getElementById('rotate-btn').textContent = 'Orientation: Horizontal';
   document.getElementById('start-btn').disabled = true;
   document.getElementById('status').textContent = 'Place your ships on the board';
@@ -598,7 +601,8 @@ function playerFire(r, c) {
   }
 
   // AI turn after a short delay
-  setTimeout(() => {
+  aiTimeoutId = setTimeout(() => {
+    aiTimeoutId = null;
     aiTurn();
     if (phase === 'playing') playerTurn = true;
   }, 400);
