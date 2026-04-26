@@ -341,6 +341,7 @@ let placedCount = 0;
 // AI state
 let aiQueue = [];                     // target cells to try next
 let aiHits = [];                      // recent hits on current target ship
+let playerTurn = true;                // turn lock to prevent rapid-fire
 
 // ── Initialise ─────────────────────────────────────────────
 function init() {
@@ -356,6 +357,7 @@ function init() {
   placedCount = 0;
   aiQueue = [];
   aiHits = [];
+  playerTurn = true;
   document.getElementById('rotate-btn').textContent = 'Orientation: Horizontal';
   document.getElementById('start-btn').disabled = true;
   document.getElementById('status').textContent = 'Place your ships on the board';
@@ -563,7 +565,10 @@ function placeAIShips() {
 // ── Player fires ───────────────────────────────────────────
 function playerFire(r, c) {
   if (phase !== 'playing') return;
+  if (!playerTurn) return;
   if (playerHits[r][c] !== null) return; // already fired
+
+  playerTurn = false;
 
   const val = enemyBoard[r][c];
   const cell = getCell('enemy-grid', r, c);
@@ -593,7 +598,10 @@ function playerFire(r, c) {
   }
 
   // AI turn after a short delay
-  setTimeout(aiTurn, 400);
+  setTimeout(() => {
+    aiTurn();
+    if (phase === 'playing') playerTurn = true;
+  }, 400);
 }
 
 // ── AI Turn (Hunt / Target) ────────────────────────────────
@@ -646,11 +654,18 @@ function aiTurn() {
     aiHits.push({ r, c });
 
     if (playerShips[val].hits === playerShips[val].size) {
-      // Ship sunk — clear targeting state for this ship
+      // Ship sunk — remove only this ship's hits from targeting state
       markSunk('player-grid', playerShips[val], enemyHits);
-      // Remove any queued cells that came from this ship's targeting
-      aiHits = [];
-      aiQueue = [];
+      const sunkCells = new Set(playerShips[val].cells.map(({ r, c }) => `${r},${c}`));
+      aiHits = aiHits.filter(h => !sunkCells.has(`${h.r},${h.c}`));
+      if (aiHits.length > 0) {
+        // Rebuild queue from remaining hits
+        aiQueue = [];
+        aiHits.forEach(h => addAdjacentTargets(h.r, h.c));
+        if (aiHits.length >= 2) refineTargetQueue();
+      } else {
+        aiQueue = [];
+      }
       document.getElementById('status').textContent = `AI sunk your ${playerShips[val].name}! Your turn.`;
     } else {
       // Add adjacent cells to target queue
